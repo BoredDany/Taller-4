@@ -1,5 +1,6 @@
 #include "ArbolKD.h"
 #include <queue>
+#include <list>
 #include <cmath>
 
 using namespace std;
@@ -115,7 +116,7 @@ double ArbolKD<T>::calcularDistancia(double x1, int y1, double x2, int y2){
     return distancia;
 }
 
-template <class T>
+/*template <class T>
 void ArbolKD<T>::buscar(double x, int y){
     if(this->esVacio()){
         return ;
@@ -128,55 +129,93 @@ void ArbolKD<T>::buscar(double x, int y){
 
         while(nodoActual != nullptr && !encontrado){
 
-            if(dimension % 2 != 0){//x
-                std::cout << "X " << std::endl;
-                if(x <= nodoActual->obtenerDato().x){
-                    nodoRes = nodoActual;
-                    nodoActual = nodoActual->obtenerHijoIzq();
-                    dimension++;
-                }else if (x > nodoActual->obtenerDato().x){
-                    nodoRes = nodoActual;
-                    nodoActual = nodoActual->obtenerHijoDer();
-                    dimension++;
-                }
+            if(nodoActual->obtenerDato().x == x && nodoActual->obtenerDato().y == y){
+                nodoRes = nodoActual;
                 distanciaRes = calcularDistancia(x,y,nodoRes->obtenerDato().x, nodoRes->obtenerDato().y);
-                distancia = calcularDistancia(x,y,nodoActual->obtenerDato().x, nodoActual->obtenerDato().y);
-                std::cout << nodoActual->obtenerDato().x <<" - " << x << endl;
-                std::cout << nodoActual->obtenerDato().y <<" - " << y << endl;
-                std::cout << "DISTANCIA  " << distancia << endl;
-            }else{//y
-                std::cout << "Y  " << std::endl;
-                if(y <= nodoActual->obtenerDato().y){
-                    nodoRes = nodoActual;
-                    nodoActual = nodoActual->obtenerHijoIzq();
-                    dimension++;
-                }else if (y > nodoActual->obtenerDato().y){
-                    nodoRes = nodoActual;
-                    nodoActual = nodoActual->obtenerHijoDer();
-                    dimension++;
+                std::cout << "NODO IDENTICO ENCONTRADO CON DISTANCIA " << distanciaRes << endl;
+                std::cout << "La fruta es: " << nodoRes->obtenerDato() << endl;
+                return;
+            }else{
+                if(dimension % 2 != 0){//x
+                    std::cout << "X " << std::endl;
+                    if(x <= nodoActual->obtenerDato().x){
+                        nodoRes = nodoActual;
+                        nodoActual = nodoActual->obtenerHijoIzq();
+                        dimension++;
+                    }else if (x > nodoActual->obtenerDato().x){
+                        nodoRes = nodoActual;
+                        nodoActual = nodoActual->obtenerHijoDer();
+                        dimension++;
+                    }
+                    distanciaRes = calcularDistancia(x,y,nodoRes->obtenerDato().x, nodoRes->obtenerDato().y);
+                    distancia = calcularDistancia(x,y,nodoActual->obtenerDato().x, nodoActual->obtenerDato().y);
+                    std::cout << nodoActual->obtenerDato().x <<" - " << x << endl;
+                    std::cout << nodoActual->obtenerDato().y <<" - " << y << endl;
+                    std::cout << "DISTANCIA  " << distancia << endl;
+                }else{//y
+                    std::cout << "Y  " << std::endl;
+                    if(y <= nodoActual->obtenerDato().y){
+                        nodoRes = nodoActual;
+                        nodoActual = nodoActual->obtenerHijoIzq();
+                        dimension++;
+                    }else if (y > nodoActual->obtenerDato().y){
+                        nodoRes = nodoActual;
+                        nodoActual = nodoActual->obtenerHijoDer();
+                        dimension++;
+                    }
+                    distanciaRes = calcularDistancia(x,y,nodoRes->obtenerDato().x, nodoRes->obtenerDato().y);
+                    distancia = calcularDistancia(x,y,nodoActual->obtenerDato().x, nodoActual->obtenerDato().y);
+                    std::cout << nodoActual->obtenerDato().x <<" - " << x << endl;
+                    std::cout << nodoActual->obtenerDato().y <<" - " << y << endl;
+                    std::cout << "DISTANCIA  " << distancia << endl;
                 }
-                distanciaRes = calcularDistancia(x,y,nodoRes->obtenerDato().x, nodoRes->obtenerDato().y);
-                distancia = calcularDistancia(x,y,nodoActual->obtenerDato().x, nodoActual->obtenerDato().y);
-                std::cout << nodoActual->obtenerDato().x <<" - " << x << endl;
-                std::cout << nodoActual->obtenerDato().y <<" - " << y << endl;
-                std::cout << "DISTANCIA  " << distancia << endl;
             }
 
+
             if(distancia < distanciaRes){
+                nodoRes = nodoActual;
                 distanciaRes = distancia;
                 std::cout << "DISTANCIA MENOR " << distanciaRes << endl;
             }
 
             if(nodoActual->obtenerHijoDer() == nullptr && nodoActual->obtenerHijoIzq() == nullptr){
                 std::cout << "NODO MAS PARECIDO CON DISTANCIA " << distanciaRes << endl;
-                std::cout << nodoRes->obtenerDato() << endl;
+                std::cout << "La fruta es posiblemente: " << nodoRes->obtenerDato()<< endl;
                 encontrado = true;
-                //return nodoRes;
             }
 
         }
     }
+}*/
+
+template <class T>
+void ArbolKD<T>::buscar(double x, int y, NodoKD<T> * nodo) {
+    double distancia = calcularDistancia(x,y,nodo->obtenerDato().x,nodo->obtenerDato().y);
+    NodoKD<T>* mejorNodo = nullptr;
+    buscarR(x,y,this->raiz, distancia, &mejorNodo);
+    cout << "\nES " << mejorNodo->obtenerDato() << " con distancia " << distancia << endl << endl;
 }
+
+template <class T>
+NodoKD<T> *  ArbolKD<T>::buscarR(double x, int y, NodoKD<T> * nodo, double& mejorDistancia, NodoKD<T>** mejorNodo){
+
+    double distancia ;
+
+
+    if (nodo != nullptr) {
+
+        buscarR(x,y,nodo->obtenerHijoIzq(),mejorDistancia,mejorNodo);
+        distancia = calcularDistancia(x,y,nodo->obtenerDato().x, nodo->obtenerDato().y);
+        cout << nodo->obtenerDato() << " distancia: " << distancia << endl;
+        if(distancia < mejorDistancia){
+            mejorDistancia = distancia;
+            *mejorNodo = nodo;
+        }
+        buscarR(x,y,nodo->obtenerHijoDer(),mejorDistancia,mejorNodo);
+    }
+
+}
+
 
 template <class T>
 void ArbolKD<T>::preOrden() {
@@ -195,13 +234,14 @@ void ArbolKD<T>::preOrdenRecursivo(NodoKD<T>* nodo) {
 template <class T>
 void ArbolKD<T>::inOrden() {
     inOrdenRecursivo(this->raiz);
+    cout << endl;
 }
 
 template <class T>
 void ArbolKD<T>::inOrdenRecursivo(NodoKD<T>* nodo) {
     if (nodo) {
         inOrdenRecursivo(nodo->obtenerHijoIzq());
-        cout << nodo->obtenerDato() << " ";
+        cout << nodo->obtenerDato() << endl;
         inOrdenRecursivo(nodo->obtenerHijoDer());
     }
 }

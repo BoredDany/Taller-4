@@ -4,7 +4,6 @@
 #include <ctime>
 #include "ArbolKD.h"
 #include "punto.h"
-#include "ArbolQuad.h"
 using namespace std;
 
 template <class tree>
@@ -38,24 +37,11 @@ void buscar(double x, int y, tree arbol){
 }
 
 int main() {
-    ArbolKD<int> arbolKD;
-    ArbolQuad<int> arbolQuad;
+    ArbolKD<int>arbolKD;
     string nameFile;
     cout << "Archivo a leer: ";
-    cin >> nameFile;
+    cin>>nameFile;
 
-    cout<<"\n QUAD------------------------------------------------"<<std::endl;
-    std::clock_t start_arbolQuad = std::clock();
-
-    llenarArbol(arbolQuad, nameFile);
-    std::clock_t end_arbolQuad = std::clock( );
-    double tiempo_arbolQuad =
-            ( end_arbolQuad - start_arbolQuad ) / double( CLOCKS_PER_SEC );
-
-    cout << "Tiempo de llenado Arbol QUAD = " << tiempo_arbolQuad << "seg." << endl << endl;
-    cout << "ARBOL KD EN RECORRIDO POR NIVELES:"<< endl;
-    arbolQuad.nivelOrden();
-    cout << endl;
 
     cout<< "\nKD--------------------------------------------------"<< std::endl;
     std::clock_t start_arbolKD = std::clock( );

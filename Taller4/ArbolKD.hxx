@@ -1,5 +1,6 @@
 #include "ArbolKD.h"
 #include <queue>
+#include <cmath>
 
 using namespace std;
 
@@ -103,6 +104,78 @@ bool ArbolKD<T>::insertar(punto val) {
 
     }
     return insertado;
+}
+
+template <class T>
+double ArbolKD<T>::calcularDistancia(double x1, int y1, double x2, int y2){
+    double distancia = 0, distanciaX = 0, distanciaY = 0;
+    distanciaX = pow(x1-x2,2);
+    distanciaY = pow(y1-y2,2);
+    distancia = sqrt(distanciaY+distanciaX);
+    return distancia;
+}
+
+template <class T>
+void ArbolKD<T>::buscar(double x, int y){
+    if(this->esVacio()){
+        return ;
+    }else{
+        int dimension = 1;
+        double distancia = 0, distanciaRes = 0;
+        NodoKD<T> * nodoActual = this->raiz;
+        NodoKD<T> * nodoRes = this->raiz;
+        bool encontrado = false;
+
+        while(nodoActual != nullptr && !encontrado){
+
+            if(dimension % 2 != 0){//x
+                std::cout << "X " << std::endl;
+                if(x <= nodoActual->obtenerDato().x){
+                    nodoRes = nodoActual;
+                    nodoActual = nodoActual->obtenerHijoIzq();
+                    dimension++;
+                }else if (x > nodoActual->obtenerDato().x){
+                    nodoRes = nodoActual;
+                    nodoActual = nodoActual->obtenerHijoDer();
+                    dimension++;
+                }
+                distanciaRes = calcularDistancia(x,y,nodoRes->obtenerDato().x, nodoRes->obtenerDato().y);
+                distancia = calcularDistancia(x,y,nodoActual->obtenerDato().x, nodoActual->obtenerDato().y);
+                std::cout << nodoActual->obtenerDato().x <<" - " << x << endl;
+                std::cout << nodoActual->obtenerDato().y <<" - " << y << endl;
+                std::cout << "DISTANCIA  " << distancia << endl;
+            }else{//y
+                std::cout << "Y  " << std::endl;
+                if(y <= nodoActual->obtenerDato().y){
+                    nodoRes = nodoActual;
+                    nodoActual = nodoActual->obtenerHijoIzq();
+                    dimension++;
+                }else if (y > nodoActual->obtenerDato().y){
+                    nodoRes = nodoActual;
+                    nodoActual = nodoActual->obtenerHijoDer();
+                    dimension++;
+                }
+                distanciaRes = calcularDistancia(x,y,nodoRes->obtenerDato().x, nodoRes->obtenerDato().y);
+                distancia = calcularDistancia(x,y,nodoActual->obtenerDato().x, nodoActual->obtenerDato().y);
+                std::cout << nodoActual->obtenerDato().x <<" - " << x << endl;
+                std::cout << nodoActual->obtenerDato().y <<" - " << y << endl;
+                std::cout << "DISTANCIA  " << distancia << endl;
+            }
+
+            if(distancia < distanciaRes){
+                distanciaRes = distancia;
+                std::cout << "DISTANCIA MENOR " << distanciaRes << endl;
+            }
+
+            if(nodoActual->obtenerHijoDer() == nullptr && nodoActual->obtenerHijoIzq() == nullptr){
+                std::cout << "NODO MAS PARECIDO CON DISTANCIA " << distanciaRes << endl;
+                std::cout << nodoRes->obtenerDato() << endl;
+                encontrado = true;
+                //return nodoRes;
+            }
+
+        }
+    }
 }
 
 template <class T>

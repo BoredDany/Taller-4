@@ -29,6 +29,13 @@ void llenarArbol(tree& arbol, string fileName){
         cout << "No se pudo leer archivo";
     }
 }
+
+template <class tree>
+void buscar(double x, int y, tree arbol){
+    string frtuta;
+    arbol.buscar(x, y);
+}
+
 int main() {
     ArbolKD<int>arbolKD;
     string nameFile;
@@ -47,6 +54,24 @@ int main() {
     cout << "ARBOL KD EN RECORRIDO POR NIVELES:"<< endl;
     arbolKD.nivelOrden();
     cout << endl;
+
+    double x;
+    int y;
+    cout << "BUSCAR UNA FRUTA";
+    cout << "Peso:";
+    cin>>x;
+    cout << "Color: ";
+    cin>>y;
+
+
+    std::clock_t start_buscarKD = std::clock( );
+    buscar(x,y,arbolKD);
+    std::clock_t end_buscarKD = std::clock( );
+    double tiempo_buscarKD =
+            ( end_buscarKD - start_buscarKD ) / double( CLOCKS_PER_SEC );
+    //cout << "ENCONTRADO: " << fruta << endl;
+    cout << "Tiempo de buscar Arbol KD = " << tiempo_buscarKD << "seg." << endl << endl;
+
 
     return 0;
 }

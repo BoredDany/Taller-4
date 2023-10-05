@@ -16,6 +16,8 @@ template <class T> class ArbolKD {
     void fijarRaiz(NodoKD<T>* n_raiz);
     bool esVacio();
     bool insertar(punto val);
+    void buscar(double x, int y);
+    double calcularDistancia(double x1, int y1, double x2, int y2);
     void preOrden();
     void preOrdenRecursivo(NodoKD<T>* nodo);
     void inOrden();

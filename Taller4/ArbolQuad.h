@@ -3,7 +3,7 @@
 
 #ifndef __ARBOLQUAD_H__
 #define __ARBOLQUAD_H__
-class ArbolQuad {
+template <class T> class ArbolQuad  {
 protected:
   NodoQuad *raiz;
 

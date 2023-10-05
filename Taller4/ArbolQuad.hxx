@@ -1,40 +1,41 @@
 #include "ArbolQuad.h"
 #include <queue>
 
-ArbolQuad :: ArbolQuad(){
+template <class T>
+ArbolQuad<T>::ArbolQuad() {
   this->raiz = nullptr;
 }
-
-ArbolQuad :: ArbolQuad(punto val){
+template <class T>
+ArbolQuad<T> :: ArbolQuad(punto val){
   NodoQuad *nodo = new NodoQuad(val);
   this->raiz = nodo;
 }
-
-ArbolQuad :: ~ArbolQuad(){
+template <class T>
+ArbolQuad<T>:: ~ArbolQuad(){
   if (this->raiz == nullptr)
   {
     delete this->raiz;
     this->raiz = nullptr;
   }
 }
-
-punto ArbolQuad :: datoRaiz(){
+template <class T>
+punto ArbolQuad<T>:: datoRaiz(){
   return (this->raiz)->obtenerDato();
 }
-
-NodoQuad * ArbolQuad :: obtenerRaiz(){
+template <class T>
+NodoQuad* ArbolQuad<T>::obtenerRaiz() {
   return this->raiz;
 }
-
-void ArbolQuad ::fijarRaiz(NodoQuad *n_raiz){
+template <class T>
+void ArbolQuad<T> ::fijarRaiz(NodoQuad *n_raiz){
   this->raiz = n_raiz;
 }
-
-bool ArbolQuad :: esVacio(){
+template <class T>
+bool ArbolQuad<T> :: esVacio(){
   return (this->raiz == nullptr);
 }
-
-bool ArbolQuad :: insertar(punto val){
+template <class T>
+bool ArbolQuad<T> :: insertar(punto val){
   if (this->esVacio()) {
     this->raiz = new NodoQuad(val);
     return true;
@@ -74,12 +75,12 @@ bool ArbolQuad :: insertar(punto val){
     }
   }
 }
-
-void ArbolQuad :: preOrden(){
+template <class T>
+void ArbolQuad<T> :: preOrden(){
   preOrden(this->raiz);
 }
-
-void ArbolQuad :: preOrden(NodoQuad *nodo){
+template <class T>
+void ArbolQuad<T> :: preOrden(NodoQuad *nodo){
   if (nodo != nullptr)
   {
     cout << nodo->obtenerDato() << " ";
@@ -90,12 +91,12 @@ void ArbolQuad :: preOrden(NodoQuad *nodo){
     
   }
 }
-
-void ArbolQuad :: inOrden(){
+template <class T>
+void ArbolQuad<T> :: inOrden(){
   inOrden(this->raiz);
 }
-
-void ArbolQuad :: inOrden(NodoQuad *nodo){
+template <class T>
+void ArbolQuad<T> :: inOrden(NodoQuad *nodo){
   if (nodo != nullptr)
   {
     inOrden(nodo->obtenerHijoSupIzq());
@@ -105,12 +106,12 @@ void ArbolQuad :: inOrden(NodoQuad *nodo){
     inOrden(nodo->obtenerHijoInfDer());
   }
 }
-
-void ArbolQuad :: posOrden(){
+template <class T>
+void ArbolQuad<T> :: posOrden(){
   posOrden(this->raiz);
 }
-
-void ArbolQuad :: posOrden(NodoQuad *nodo){
+template <class T>
+void ArbolQuad<T> :: posOrden(NodoQuad *nodo){
   if (nodo != nullptr)
   {
     posOrden(nodo->obtenerHijoSupIzq());
@@ -120,8 +121,8 @@ void ArbolQuad :: posOrden(NodoQuad *nodo){
     cout << nodo->obtenerDato() << " ";
   }
 }
-
-void ArbolQuad :: nivelOrden(){
+template <class T>
+void ArbolQuad<T> :: nivelOrden(){
   if (!this->esVacio())
   {
     queue<NodoQuad *> cola;

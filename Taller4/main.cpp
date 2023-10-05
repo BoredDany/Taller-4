@@ -4,6 +4,7 @@
 #include <ctime>
 #include "ArbolKD.h"
 #include "punto.h"
+//g++ -std=c++11 -o test main.cpp
 using namespace std;
 
 template <class tree>
@@ -30,11 +31,6 @@ void llenarArbol(tree& arbol, string fileName){
     }
 }
 
-template <class tree>
-void buscar(double x, int y, tree arbol){
-    string frtuta;
-    arbol.buscar(x, y);
-}
 
 int main() {
     ArbolKD<int>arbolKD;
@@ -43,7 +39,7 @@ int main() {
     cin>>nameFile;
 
 
-    cout<< "\nKD--------------------------------------------------"<< std::endl;
+    cout<< "\nKDTREE--------------------------------------------------"<< std::endl;
     std::clock_t start_arbolKD = std::clock( );
     llenarArbol(arbolKD,nameFile);
     std::clock_t end_arbolKD = std::clock( );
@@ -57,21 +53,22 @@ int main() {
 
     double x;
     int y;
-    cout << "BUSCAR UNA FRUTA";
-    cout << "Peso:";
+    cout << "\nBUSCAR UNA FRUTA";
+    cout << "\nPeso:";
     cin>>x;
     cout << "Color: ";
     cin>>y;
 
 
     std::clock_t start_buscarKD = std::clock( );
-    buscar(x,y,arbolKD);
+    int dimension = 1;
+    arbolKD.buscar(x,y,arbolKD.obtenerRaiz());
     std::clock_t end_buscarKD = std::clock( );
     double tiempo_buscarKD =
             ( end_buscarKD - start_buscarKD ) / double( CLOCKS_PER_SEC );
-    //cout << "ENCONTRADO: " << fruta << endl;
     cout << "Tiempo de buscar Arbol KD = " << tiempo_buscarKD << "seg." << endl << endl;
 
+    cout<< "\nKQUADTREE--------------------------------------------------"<< std::endl;
 
     return 0;
 }

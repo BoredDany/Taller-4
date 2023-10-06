@@ -228,7 +228,7 @@ void ArbolKD<T>::preOrden() {
 template <class T>
 void ArbolKD<T>::preOrdenRecursivo(NodoKD<T>* nodo) {
     if (nodo) {
-        cout << nodo->obtenerDato() << " ";
+        cout << nodo->obtenerDato() << endl;
         preOrdenRecursivo(nodo->obtenerHijoIzq());
         preOrdenRecursivo(nodo->obtenerHijoDer());
     }
@@ -259,7 +259,7 @@ void ArbolKD<T>::posOrdenRecursivo(NodoKD<T>* nodo) {
     if (nodo) {
         posOrdenRecursivo(nodo->obtenerHijoIzq());
         posOrdenRecursivo(nodo->obtenerHijoDer());
-        cout << nodo->obtenerDato() << " ";
+        cout << nodo->obtenerDato() << endl;
     }
 }
 
@@ -276,7 +276,7 @@ void ArbolKD<T>::nivelOrden() {
         NodoKD<T>* nodo = cola.front();
         cola.pop();
 
-        cout << nodo->obtenerDato() << " ";
+        cout << nodo->obtenerDato() << endl;
 
         if (nodo->obtenerHijoIzq()) {
             cola.push(nodo->obtenerHijoIzq());

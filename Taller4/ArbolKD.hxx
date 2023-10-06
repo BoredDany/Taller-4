@@ -193,27 +193,30 @@ void ArbolKD<T>::buscar(double x, int y, NodoKD<T> * nodo) {
     double distancia = calcularDistancia(x,y,nodo->obtenerDato().x,nodo->obtenerDato().y);
     NodoKD<T>* mejorNodo = nullptr;
     buscarR(x,y,this->raiz, distancia, &mejorNodo);
-    cout << "\nES " << mejorNodo->obtenerDato() << " con distancia " << distancia << endl << endl;
+    if(mejorNodo != nullptr){
+        cout << "\nES " << mejorNodo->obtenerDato() << " con distancia " << distancia << endl << endl;
+    }else{
+        cout << "ERROR AL ENCONTRAR" << endl;
+    }
 }
 
 template <class T>
-NodoKD<T> *  ArbolKD<T>::buscarR(double x, int y, NodoKD<T> * nodo, double& mejorDistancia, NodoKD<T>** mejorNodo){
+void ArbolKD<T>::buscarR(double x, int y, NodoKD<T> * nodo, double& mejorDistancia, NodoKD<T>** mejorNodo){
 
-    double distancia ;
-
+    double distancia;
 
     if (nodo != nullptr) {
 
-        buscarR(x,y,nodo->obtenerHijoIzq(),mejorDistancia,mejorNodo);
         distancia = calcularDistancia(x,y,nodo->obtenerDato().x, nodo->obtenerDato().y);
-        cout << nodo->obtenerDato() << " distancia: " << distancia << endl;
-        if(distancia < mejorDistancia){
+
+        if(distancia <= mejorDistancia){
             mejorDistancia = distancia;
             *mejorNodo = nodo;
         }
+
+        buscarR(x,y,nodo->obtenerHijoIzq(),mejorDistancia,mejorNodo);
         buscarR(x,y,nodo->obtenerHijoDer(),mejorDistancia,mejorNodo);
     }
-
 }
 
 

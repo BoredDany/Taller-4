@@ -17,7 +17,7 @@ template <class T> class ArbolKD {
     bool esVacio();
     bool insertar(punto val);
     void buscar(double x, int y, NodoKD<T> * nodo);
-    NodoKD<T> * buscarR(double x, int y, NodoKD<T> * nodo, double& mejorDistancia, NodoKD<T>** mejorNodo);
+    void buscarR(double x, int y, NodoKD<T> * nodo, double& mejorDistancia, NodoKD<T>** mejorNodo);
     double calcularDistancia(double x1, int y1, double x2, int y2);
     void preOrden();
     void preOrdenRecursivo(NodoKD<T>* nodo);

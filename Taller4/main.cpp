@@ -46,7 +46,7 @@ int main() {
 
     cout << "Tiempo de llenado Arbol KD = " << tiempo_arbolKD << "seg." << endl << endl;
     cout << "ARBOL KD EN RECORRIDO POR NIVELES:"<< endl;
-    arbolKD.nivelOrden();
+    arbolKD.inOrden();
     cout << endl;
 
     double x;
@@ -58,14 +58,17 @@ int main() {
     cin>>y;
 
 
-    std::clock_t start_buscarKD = std::clock( );
-    arbolKD.buscar(x,y,arbolKD.obtenerRaiz());
-    std::clock_t end_buscarKD = std::clock( );
-    double tiempo_buscarKD =
-            ( end_buscarKD - start_buscarKD ) / double( CLOCKS_PER_SEC );
-    //cout << "ENCONTRADO: " << fruta << endl;
-    cout << "Tiempo de buscar Arbol KD = " << tiempo_buscarKD << "seg." << endl << endl;
 
+    if(arbolKD.esVacio()){
+        cout << "ARBOL VACIO"<< endl;
+    }else{
+        std::clock_t start_buscarKD = std::clock( );
+        arbolKD.buscar(x, y,arbolKD.obtenerRaiz());
+        std::clock_t end_buscarKD = std::clock( );
+        double tiempo_buscarKD =
+                ( end_buscarKD - start_buscarKD ) / double( CLOCKS_PER_SEC );
+        cout << "Tiempo de buscar Arbol KD = " << tiempo_buscarKD << "seg." << endl << endl;
+    }
 
     return 0;
 }

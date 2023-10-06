@@ -50,6 +50,7 @@ bool ArbolKD<T>::insertar(punto val) {
     NodoKD<T> * padre = this->raiz;
     NodoKD<T> * nodo = this->raiz;
     bool insertado = false;
+    bool duplicado = false;
     int dimension = 1;
 
     if(this->esVacio()){
@@ -60,46 +61,48 @@ bool ArbolKD<T>::insertar(punto val) {
         while(padre != nullptr){
             nodo = padre;
 
+            if(padre->obtenerDato().x == val.x && padre->obtenerDato().y == val.y){
+                duplicado = true;
+                break;
+            }
+
             if(dimension % 2 != 0){//dimension x
                 if(val.x <= padre->obtenerDato().x){
                     padre = padre->obtenerHijoIzq();
-                    dimension++;
                 }else{
                     padre = padre->obtenerHijoDer();
-                    dimension++;
                 }
+                dimension++;
             }else{//dimension y
                 if(val.y <= padre->obtenerDato().y){
                     padre = padre->obtenerHijoIzq();
-                    dimension++;
                 }else{
                     padre = padre->obtenerHijoDer();
-                    dimension++;
                 }
+                dimension++;
             }
         }
 
         dimension--;
 
-        if(nodo != nullptr){
+        if(nodo != nullptr && !duplicado){
+
             NodoKD<T>* nuevo = new NodoKD<T>(val);
 
             if(dimension % 2 != 0) {//dimension x
                 if(val.x <= nodo->obtenerDato().x && nodo->obtenerHijoIzq() == nullptr) {
                     nodo->fijarHijoIzq(nuevo);
-                    insertado = true;
                 }else if(val.x > nodo->obtenerDato().x && nodo->obtenerHijoDer() == nullptr){
                     nodo->fijarHijoDer(nuevo);
-                    insertado = true;
                 }
+                insertado = true;
             }else {//dimension y
                 if(val.y <= nodo->obtenerDato().y && nodo->obtenerHijoIzq() == nullptr) {
                     nodo->fijarHijoIzq(nuevo);
-                    insertado = true;
                 }else if(val.y > nodo->obtenerDato().y && nodo->obtenerHijoIzq() == nullptr){
                     nodo->fijarHijoDer(nuevo);
-                    insertado = true;
                 }
+                insertado = true;
             }
         }
 
@@ -116,84 +119,13 @@ double ArbolKD<T>::calcularDistancia(double x1, int y1, double x2, int y2){
     return distancia;
 }
 
-/*template <class T>
-void ArbolKD<T>::buscar(double x, int y){
-    if(this->esVacio()){
-        return ;
-    }else{
-        int dimension = 1;
-        double distancia = 0, distanciaRes = 0;
-        NodoKD<T> * nodoActual = this->raiz;
-        NodoKD<T> * nodoRes = this->raiz;
-        bool encontrado = false;
-
-        while(nodoActual != nullptr && !encontrado){
-
-            if(nodoActual->obtenerDato().x == x && nodoActual->obtenerDato().y == y){
-                nodoRes = nodoActual;
-                distanciaRes = calcularDistancia(x,y,nodoRes->obtenerDato().x, nodoRes->obtenerDato().y);
-                std::cout << "NODO IDENTICO ENCONTRADO CON DISTANCIA " << distanciaRes << endl;
-                std::cout << "La fruta es: " << nodoRes->obtenerDato() << endl;
-                return;
-            }else{
-                if(dimension % 2 != 0){//x
-                    std::cout << "X " << std::endl;
-                    if(x <= nodoActual->obtenerDato().x){
-                        nodoRes = nodoActual;
-                        nodoActual = nodoActual->obtenerHijoIzq();
-                        dimension++;
-                    }else if (x > nodoActual->obtenerDato().x){
-                        nodoRes = nodoActual;
-                        nodoActual = nodoActual->obtenerHijoDer();
-                        dimension++;
-                    }
-                    distanciaRes = calcularDistancia(x,y,nodoRes->obtenerDato().x, nodoRes->obtenerDato().y);
-                    distancia = calcularDistancia(x,y,nodoActual->obtenerDato().x, nodoActual->obtenerDato().y);
-                    std::cout << nodoActual->obtenerDato().x <<" - " << x << endl;
-                    std::cout << nodoActual->obtenerDato().y <<" - " << y << endl;
-                    std::cout << "DISTANCIA  " << distancia << endl;
-                }else{//y
-                    std::cout << "Y  " << std::endl;
-                    if(y <= nodoActual->obtenerDato().y){
-                        nodoRes = nodoActual;
-                        nodoActual = nodoActual->obtenerHijoIzq();
-                        dimension++;
-                    }else if (y > nodoActual->obtenerDato().y){
-                        nodoRes = nodoActual;
-                        nodoActual = nodoActual->obtenerHijoDer();
-                        dimension++;
-                    }
-                    distanciaRes = calcularDistancia(x,y,nodoRes->obtenerDato().x, nodoRes->obtenerDato().y);
-                    distancia = calcularDistancia(x,y,nodoActual->obtenerDato().x, nodoActual->obtenerDato().y);
-                    std::cout << nodoActual->obtenerDato().x <<" - " << x << endl;
-                    std::cout << nodoActual->obtenerDato().y <<" - " << y << endl;
-                    std::cout << "DISTANCIA  " << distancia << endl;
-                }
-            }
-
-
-            if(distancia < distanciaRes){
-                nodoRes = nodoActual;
-                distanciaRes = distancia;
-                std::cout << "DISTANCIA MENOR " << distanciaRes << endl;
-            }
-
-            if(nodoActual->obtenerHijoDer() == nullptr && nodoActual->obtenerHijoIzq() == nullptr){
-                std::cout << "NODO MAS PARECIDO CON DISTANCIA " << distanciaRes << endl;
-                std::cout << "La fruta es posiblemente: " << nodoRes->obtenerDato()<< endl;
-                encontrado = true;
-            }
-
-        }
-    }
-}*/
-
 template <class T>
 void ArbolKD<T>::buscar(double x, int y, NodoKD<T> * nodo) {
     double distancia = calcularDistancia(x,y,nodo->obtenerDato().x,nodo->obtenerDato().y);
     NodoKD<T>* mejorNodo = nullptr;
     buscarR(x,y,this->raiz, distancia, &mejorNodo);
     if(mejorNodo != nullptr){
+        cout << "\nRESULTADO DEL KD TREE";
         cout << "\nES " << mejorNodo->obtenerDato() << " con distancia " << distancia << endl << endl;
     }else{
         cout << "ERROR AL ENCONTRAR" << endl;

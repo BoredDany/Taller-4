@@ -16,6 +16,9 @@ public:
   void fijarRaiz(NodoQuad *n_raiz);
   bool esVacio();
   bool insertar(punto val);
+  void buscar(double x, int y, NodoQuad * nodo);
+  void buscarR(double x, int y, NodoQuad * nodo, double& mejorDistancia, NodoQuad** mejorNodo);
+  double calcularDistancia(double x1, int y1, double x2, int y2);
   void preOrden();
   void preOrden(NodoQuad *nodo);
   void inOrden();

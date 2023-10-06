@@ -1,3 +1,10 @@
+/*
+ * Daniela Martínez Quiroga
+ * Lina Slamanca
+ * Isabella Rodríguez
+ * Santiago Castro
+ */
+
 #include <iostream>
 #include <fstream>
 #include <sstream>

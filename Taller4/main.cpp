@@ -33,7 +33,6 @@ bool llenarArbol(tree& arbol, string fileName){
             p.x = x;
             p.y = y;
             arbol.insertar(p);
-            cout << p.dato << " ";
         }
         leido = true;
     }else{

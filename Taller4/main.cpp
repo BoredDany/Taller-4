@@ -33,6 +33,7 @@ bool llenarArbol(tree& arbol, string fileName){
             p.x = x;
             p.y = y;
             arbol.insertar(p);
+            cout << p.dato << " ";
         }
         leido = true;
     }else{
@@ -114,5 +115,6 @@ int main() {
                 ( end_buscarQ - start_buscarQ ) / double( CLOCKS_PER_SEC );
         cout << "Tiempo de buscar (" << x << " , " << y <<") en Quad tree = " << tiempo_buscarQ << "seg." << endl << endl;
     }
+
     return 0;
 }

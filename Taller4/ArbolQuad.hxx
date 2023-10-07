@@ -50,7 +50,7 @@ bool ArbolQuad<T> :: insertar(punto val){
 
       padre = nodo;
 
-      if (val == nodo->obtenerDato()){
+      if (val.x == nodo->obtenerDato().x && val.y == nodo->obtenerDato().y){
         duplicado = true;
         break;
       } else if (val.x > nodo->obtenerDato().x && val.y > nodo->obtenerDato().y){//superior derecho
@@ -59,9 +59,9 @@ bool ArbolQuad<T> :: insertar(punto val){
         nodo = nodo->obtenerHijoInfDer();
       } else if (val.x <= nodo->obtenerDato().x && val.y <= nodo->obtenerDato().y){//inferior izquierdo
         nodo = nodo->obtenerHijoInfIzq();
-      } else if (val.x >= nodo->obtenerDato().x && val.y > nodo->obtenerDato().y){//superior izquierdo
+      } else if (val.x <= nodo->obtenerDato().x && val.y > nodo->obtenerDato().y){//superior izquierdo
         nodo = nodo->obtenerHijoSupIzq();
-      }    
+      }
     }
 
     if (!duplicado){
@@ -72,11 +72,12 @@ bool ArbolQuad<T> :: insertar(punto val){
         padre->fijarHijoInfDer(nodoNuevo);
       } else if (val.x <= padre->obtenerDato().x && val.y <= padre->obtenerDato().y){//inferior izquierdo
         padre->fijarHijoInfIzq(nodoNuevo);
-      } else if (val.x >= padre->obtenerDato().x && val.y > padre->obtenerDato().y){ //superior izquierdo
+      } else if (val.x <= padre->obtenerDato().x && val.y > padre->obtenerDato().y){ //superior izquierdo
         padre->fijarHijoSupIzq(nodoNuevo);
       }
       return true;
     }
+      return false;
   }
 }
 
